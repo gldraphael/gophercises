@@ -29,7 +29,7 @@ func main() {
 
 		timer := time.NewTimer(time.Duration(*time_limit) * time.Second)
 
-		fmt.Print(timer.C, "➡️ ", question, " = ")
+		fmt.Print("➡️ ", question, " = ")
 		inputCh := make(chan string)
 		go func() {
 			var input string
@@ -39,7 +39,10 @@ func main() {
 
 		select {
 		case <-timer.C:
-			println("⏲️", timer.C)
+			println("⏲️")
+			// since we're still waiting on fmt.Scanln()
+			// that goroutine will leak 
+			// And I dont know how to prevent the leak....
 		case input := <- inputCh:
 			timer.Stop()
 			if input == answer {
