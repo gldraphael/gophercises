@@ -39,6 +39,6 @@ func main() {
 	}
 
 	fmt.Println()
-	fmt.Printf("Your score is %d\n", score)
+	fmt.Println("Your score is", score, "/",total_questions)
 	fmt.Println("You got",(float32(score) / float32(total_questions))*100, "% questions right.")
 }

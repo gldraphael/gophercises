@@ -1,3 +1,5 @@
+> Run the program with `go run main.go`
+
 # Exercise #1: Quiz Game
 
 ## Exercise details
