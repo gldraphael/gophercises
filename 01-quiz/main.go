@@ -2,21 +2,21 @@ package main
 
 import (
 	"encoding/csv"
-	// "flag"
+	"flag"
 	"fmt"
 	"log"
 	"os"
+	"time"
 )
 
 func main() {
-	// time_limit := flag.Int("timer", 30, "Default time limit for each question.")
+	time_limit := flag.Int("timer", 2, "Default time limit for each question.")
 
 	const CSV_FILE_PATH = "problems.csv"
 	records, err := load_questions(CSV_FILE_PATH)
 	if err != nil {
 		log.Fatalln("Questions could not be loaded.", err)
 	}
-
 	
 	print_welcome_prompt()
 	
@@ -26,19 +26,29 @@ func main() {
 	for _, record := range records {
 		question := record[0]
 		answer := record[1]
-		var input string
 
-		fmt.Printf("%s = ", question)
-		fmt.Scan(&input)
+		timer := time.NewTimer(time.Duration(*time_limit) * time.Second)
 
-		if input == answer {
-			score++
+		fmt.Print(timer.C, "➡️ ", question, " = ")
+		inputCh := make(chan string)
+		go func() {
+			var input string
+			fmt.Scan(&input)
+			inputCh <- input
+		}();
+
+		select {
+		case <-timer.C:
+			println("⏲️", timer.C)
+		case input := <- inputCh:
+			timer.Stop()
+			if input == answer {
+				score++
+			}
 		}
 	}
 
-	fmt.Println()
-	fmt.Println("Your score is", score, "/",total_questions)
-	fmt.Println("You got",(float32(score) / float32(total_questions))*100, "% questions right.")
+	print_scores(score, total_questions)
 }
 
 func print_welcome_prompt() {
@@ -52,6 +62,12 @@ func print_welcome_prompt() {
 	fmt.Println()
 	fmt.Println("Press ENTER to begin!")
 	fmt.Scanln()
+}
+
+func print_scores(score int, total_questions int) {
+	fmt.Println()
+	fmt.Println("Your score is", score, "/",total_questions)
+	fmt.Println("You got",(float32(score) / float32(total_questions))*100, "% questions right.")
 }
 
 func load_questions(csv_path string) ([][]string, error) {
