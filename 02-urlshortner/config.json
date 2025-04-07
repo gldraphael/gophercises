@@ -1,0 +1,12 @@
+{
+  "redirects": [
+    {
+      "slug": "/dogs",
+      "url": "https://bsky.app/search?q=dog+pics"
+    },
+    {
+      "slug": "/cats",
+      "url": "https://bsky.app/search?q=cat+pics"
+    }
+  ]
+}
