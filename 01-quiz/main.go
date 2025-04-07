@@ -11,6 +11,7 @@ import (
 
 func main() {
 	time_limit := flag.Int("timer", 2, "Default time limit for each question.")
+	flag.Parse()
 
 	const CSV_FILE_PATH = "problems.csv"
 	records, err := load_questions(CSV_FILE_PATH)
