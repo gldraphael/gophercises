@@ -11,12 +11,7 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-type RedirectionConfig struct {
-	Redirects []struct {
-			Slug string
-			Url  string
-	}
-}
+
 
 func main() {
 
@@ -33,8 +28,10 @@ func main() {
 		config, err = getYaml(*configFilePath)
 	case ".json":
 		config, err = getJson(*configFilePath)
+	case ".db":
+		config, err = GetRulesFromDb(*configFilePath)
 	default:
-		log.Fatal("Invalid file format ", fileFormat, ". Only yaml and json files are supported.")
+		log.Fatal("Invalid file format ", fileFormat, ". Only yaml, json, and db files are supported.")
 		return
 	}
 	if err != nil {
@@ -49,6 +46,7 @@ func main() {
 		})
 	}
 
+	log.Println("Listening on localhost:8080")
 	log.Fatal(http.ListenAndServe("localhost:8080", nil))
 }
 
