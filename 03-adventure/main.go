@@ -1,13 +1,16 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"log"
+	"os"
 )
 
 const STORY_FILE_PATH = "./gopher.json"
 
 func main() {
+	stdin := bufio.NewReader(os.Stdin)
 	story, err := GetStory(STORY_FILE_PATH)
 	if err != nil {
 		log.Fatal("Could not read", STORY_FILE_PATH)
@@ -18,7 +21,7 @@ func main() {
 	for quit != true {
 
 		fmt.Println()
-		fmt.Println(currentArc.Title)
+		fmt.Printf("⭐ %s\n", currentArc.Title)
 		fmt.Println("------------------------------------")
 		fmt.Println()
 		for _, paragraph := range currentArc.Story {
@@ -26,14 +29,18 @@ func main() {
 		  fmt.Println()
 		}
 		if len(currentArc.Options) > 0 {
-			fmt.Println(" ➡️ Pick an action:")
-			for i, o := range currentArc.Options {
-				fmt.Printf(" %d. %s\n", i+1, o.Text)
+			action := 0
+			for action < 1 || action > len(currentArc.Options) {
+				fmt.Printf(" ➡️ Pick an action:\n")
+				for i, o := range currentArc.Options {
+					fmt.Printf(" %d. %s\n", i+1, o.Text)
+				}
+				fmt.Print("\nYour action: ")
+				_, err = fmt.Fscan(stdin, &action)
+				if err != nil {
+					stdin.ReadString('\n') // skip all input characters until \n
+				}
 			}
-			fmt.Print("\nYour action: ")
-			var action int
-			fmt.Scan(&action)
-			// TODO: add validation
 			currentArc = story.StoryArcs[currentArc.Options[action-1].Arc]
 		} else {
 			quit = true 
