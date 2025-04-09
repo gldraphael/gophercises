@@ -16,19 +16,9 @@ type StoryArc struct {
 	Options []StoryArcOption
 }
 
-// type Story struct {
-// 	Intro     StoryArc `json:"intro"` 
-// 	NewYork   StoryArc `json:"new-york"`
-//   Debate    StoryArc `json:"debate"`
-//   SeanKelly StoryArc `json:"sean-kelly"`
-//   MarkBates StoryArc `json:"mark-bates"`
-//   Denver    StoryArc `json:"denver"`
-// 	Home      StoryArc `json:"home"`
-// }
-
 type AdventureStory struct {
-	FirstStoryArc string
-	StoryArcs     map[string]StoryArc
+	FirstArc  string
+	StoryArcs map[string]StoryArc
 }
 
 func GetStory(filePath string) (AdventureStory, error) {
@@ -38,8 +28,8 @@ func GetStory(filePath string) (AdventureStory, error) {
 		return AdventureStory{}, err
 	}
 
-	story := AdventureStory{ FirstStoryArc: "intro" }
-	json.Unmarshal([]byte(jsonText), &story.StoryArcs)
+	story := AdventureStory{}
+	json.Unmarshal([]byte(jsonText), &story)
 	return story, nil
 }
 

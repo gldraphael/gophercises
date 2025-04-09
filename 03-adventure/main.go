@@ -16,7 +16,7 @@ func main() {
 		log.Fatal("Could not read", STORY_FILE_PATH)
 	}
 	
-	currentArc := story.StoryArcs[story.FirstStoryArc]
+	currentArc := story.StoryArcs[story.FirstArc]
 	quit := false
 	for quit != true {
 
