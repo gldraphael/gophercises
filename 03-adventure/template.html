@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light">
+    <title>{{ .Title }}</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Delius&display=swap" rel="stylesheet">
+    
+    <style>
+      :root {
+        --font-size: 16px;
+        --font-family: "Delius", cursive;
+        --font-weight: 400;
+        --font-style: normal;
+        --font-color: black;
+      }
+
+      html {
+        font-size: var(--font-size);
+        font-family: var(--font-family);
+        font-weight: var(--font-weight);
+        font-style: var(--font-style);
+      }
+
+      body {
+        display: flex;
+        min-height: 100vh;
+        align-items: center;
+
+        background: linear-gradient(45deg, oklch(90.3% 0.02 209 / 0.2), oklch(91.5% 0.015 229 / 0.9))
+      }
+
+      main {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 0 0.75rem;
+        line-height: 1.5;
+
+        h1 {
+          text-align: center;
+        }
+
+        ul {
+          list-style-type: none;
+          padding-left:  1rem;
+          padding-right: 1rem;
+          margin-bottom: 2rem;
+
+          li {
+            margin-top: 1rem;
+
+            a {
+              text-decoration: none;
+              font-weight: bold;
+              color: var(--font-color)
+
+              margin: 0 -0.4em;
+              padding: 0.1em 0.4em;
+              border-radius: 0.8em 0.3em;
+              background: transparent;
+              background-image: linear-gradient(
+                to right,
+                rgba(0,     0, 255, 0.1),
+                rgba(255, 200, 255, 0.7) 4%,
+                rgba(0, 225, 255, 0.3)
+              );
+              -webkit-box-decoration-break: clone;
+              box-decoration-break: clone;
+
+              &:hover {
+                background-image: linear-gradient(
+                  to right,
+                  rgba(0,     0, 255, 0.1),
+                  rgba(255, 200, 255, 0.5) 4%,
+                  rgba(0, 225, 255, 0.15)
+                );
+              }
+            }
+          }
+        }
+      }
+
+    </style>
+  </head>
+  <body>
+    <main class="container">
+      <h1>{{.Title}}</h1>
+      <article>
+        {{ range.Story }}
+          <p>{{ . }}
+        {{ end }}
+      </article>
+      <footer>
+        <ul>
+          {{ range.Options }}
+            <li><a href="/{{ .Arc }}">{{ .Text }}</a>
+          {{ end }}
+        </ul>
+      </footer>
+    </main>
+  </body>
+</html>
+
