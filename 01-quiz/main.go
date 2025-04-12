@@ -5,6 +5,7 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	"math/rand"
 	"os"
 	"time"
 )
@@ -18,6 +19,9 @@ func main() {
 	if err != nil {
 		log.Fatalln("Questions could not be loaded.", err)
 	}
+	rand.Shuffle(len(records), func(i, j int) {
+		records[i], records[j] = records[j], records[i]
+	})
 	
 	print_welcome_prompt()
 	
