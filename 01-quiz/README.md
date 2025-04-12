@@ -1,4 +1,10 @@
-> Run the program with `go run main.go`
+Run the program with: 
+
+```
+go run . --timer 30
+```
+
+While the exercise asks for the timer to apply to the entire quiz, I've tried to make it a timer for each question instead. And there's a bug in the implementation. Make a mistake, and everything after the mistake will timeout. Sorry about that!
 
 # Exercise #1: Quiz Game
 
